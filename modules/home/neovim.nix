@@ -7,15 +7,9 @@ with lib;
   };
 
   config = mkIf config.modules.neovim.enable {
-    home.packages = with pkgs; [
-      stylua
-      sumneko-lua-language-server
-      shellcheck
-      shfmt
-      vale
-      deno
-      nodePackages.prettier
-    ];
+    # NOTE: for lua-language-server to work, you need to install the lua-language-server packages
+    #       and run `ln -sf $(which lua-language-server) ~/.config/coc/extensions/coc-lua-data/lua-language-server/bin`
+    home.packages = with pkgs; [ shellcheck shfmt nodejs lua-language-server ];
 
     programs.fzf.enable = true;
     programs.fzf.enableZshIntegration = true;
@@ -52,4 +46,3 @@ with lib;
     };
   };
 }
-

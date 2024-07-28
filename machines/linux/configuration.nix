@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, system, username, ... }:
+{ config, lib, pkgs, inputs, system, username, hyprland, swww, ... }:
 
 {
   users.users.${username} = {

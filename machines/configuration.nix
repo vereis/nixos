@@ -1,4 +1,4 @@
-{ self, config, system, lib, pkgs, inputs, zjstatus, username, home-manager, ... }:
+{ self, config, system, lib, pkgs, inputs, zjstatus, username, home-manager, hyprland, swww, ... }:
 
 {
   nixpkgs = {

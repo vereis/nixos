@@ -32,10 +32,17 @@
         url = "github:nix-community/NixOS-WSL";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+      swww.url = "github:LGFae/swww";
+      hyprland = {
+        url = "https://github.com/hyprwm/Hyprland";
+        type = "git";
+        submodules = true;
+      };
     };
 
   outputs =
     inputs @ { home-manager
+    , hyprland
     , homebrew-bundle
     , homebrew-cask
     , homebrew-core
@@ -45,6 +52,7 @@
     , nixpkgs
     , self
     , zjstatus
+    , swww
     , ...
     }:
     let
@@ -56,7 +64,7 @@
       # TODO: technically `madoka` is currently a `wsl` host, so we should probably treat those slightly
       #       differently...
       darwinSystems = { iroha = "aarch64-darwin"; };
-      linuxSystems = { madoka = "x86_64-linux"; homura = "x86_64-linux"; kyubey = "x86_64-linux"; };
+      linuxSystems = { madoka = "x86_64-linux"; kyubey = "x86_64-linux"; };
     in
     {
       darwinConfigurations =
@@ -104,18 +112,20 @@
               inherit system;
               specialArgs = {
                 inherit (nixpkgs) lib;
-                inherit inputs self system user username zjstatus;
+                inherit inputs self system user username zjstatus hyprland swww;
               };
               modules = [
                 nixos-wsl.nixosModules.wsl
+                hyprland.nixosModules.default
                 ./machines/configuration.nix
                 ./machines/linux/configuration.nix
                 ./machines/linux/${hostname}
                 home-manager.nixosModules.home-manager
                 {
+                  home-manager.backupFileExtension = "backup";
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
-                  home-manager.extraSpecialArgs = { inherit inputs user username zjstatus; };
+                  home-manager.extraSpecialArgs = { inherit inputs user username zjstatus swww; };
                   home-manager.users.${user}.imports =
                     [ (import ./machines/home.nix) ] ++
                     [ (import ./machines/linux/${hostname}/home.nix) ];

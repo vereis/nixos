@@ -1,7 +1,6 @@
 { self, config, lib, pkgs, inputs, zjstatus, username, home-manager, ... }:
 
 {
-
   environment.systemPackages = with pkgs; [ ];
   services.nix-daemon.enable = true;
 

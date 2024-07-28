@@ -34,7 +34,7 @@ with lib;
         {
           # Fonts
           font_size = config.modules.kitty.fontSize;
-          font_family = lib.mkDefault "FantasqueSansMono Nerd Font Mono";
+          font_family = "FantasqueSansM Nerd Font Mono";
 
           adjust_line_height = "2";
 
@@ -44,7 +44,7 @@ with lib;
           # Behaviour
           copy_on_select = "clipboard";
           enable_audio_bell = false;
-          linux_display_server = "x11";
+          #linux_display_server = "x11";
           sync_to_monitor = "no";
           close_on_child_death = "yes";
           hide_window_decorations = "no";
@@ -52,7 +52,7 @@ with lib;
 
           # Transparency
           background_blur = 32;
-          background_opacity = "0.825";
+          background_opacity = "0.8";
           dynamic_background_opacity = "yes";
 
           # Cursor
@@ -91,6 +91,7 @@ with lib;
           color7 = "#e0def4";
           color15 = "#e0def4";
         }
+
         # Set up some MacOS only settings
         (mkIf pkgs.stdenv.isDarwin {
           font_family = "FantasqueSansM Nerd Font Mono";
